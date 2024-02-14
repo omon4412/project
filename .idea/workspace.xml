@@ -4,7 +4,65 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c6aeb7b-3e45-43b6-aa41-6b538a67f156" name="Changes" comment="">
+    <list default="true" id="7c6aeb7b-3e45-43b6-aa41-6b538a67f156" name="Changes" comment="Initial Commit">
+      <change afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/HELP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/AuthServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/config/PasswordEncoderConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/controller/AuthController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/controller/TestController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/NewUserRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/ResponseMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/UserBlockedMessage.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/UserInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/exception/ApiError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/exception/BadRequestException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/exception/ErrorHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/exception/NotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/exception/UnauthorizedException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/mapper/UserMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/model/Role.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/repository/RoleRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/RoleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/UserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/resources/data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/main/resources/schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AuthService/src/test/java/com/omon4412/authservice/AuthServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/HELP.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/src/main/java/com/omon4412/gateway/ApiError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/src/main/java/com/omon4412/gateway/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/src/main/java/com/omon4412/gateway/GatewayServiceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/src/main/java/com/omon4412/gateway/SecurityFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/src/main/resources/application.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GatewayService/src/test/java/com/omon4412/gateway/GatewayServiceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/checkstyle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/javadoc_checkstyle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,11 +71,22 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2cLx6IgWvwOZtofjuPT5Hju5FnS" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -26,13 +95,102 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.AuthServiceApplicationTests.executor": "Debug",
+    "Maven.AuthService [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.AuthServiceApplication (1).executor": "Debug",
+    "Spring Boot.AuthServiceApplication.executor": "Debug",
+    "Spring Boot.GatewayServiceApplication.executor": "Debug",
+    "Spring Boot.TESTAuthServiceApplication.executor": "Debug",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Yande/Desktop/Project/checkstyle.xml",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "org.infernus.idea.checkstyle.CheckStyleConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Yande\Desktop\Project" />
+      <recent name="C:\Users\Yande\Desktop\Project\AuthService\src\main\resources" />
+      <recent name="C:\Users\Yande\Desktop\Project\GatewayService" />
+      <recent name="C:\Users\Yande\Desktop\Project\AuthService" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="Application" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.TESTAuthServiceApplication">
+    <configuration name="AuthServiceApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="AuthService" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.omon4412.authservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.omon4412.authservice" />
+      <option name="MAIN_CLASS_NAME" value="com.omon4412.authservice.AuthServiceApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" folderName="Main">
+      <module name="AuthService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.omon4412.authservice.AuthServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GatewayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" folderName="Main">
+      <module name="GatewayService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.omon4412.gateway.GatewayServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TESTAuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" folderName="Test">
+      <option name="ACTIVE_PROFILES" value="test" />
+      <module name="AuthService" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.omon4412.authservice.AuthServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.AuthServiceApplicationTests" />
+      <item itemvalue="Spring Boot.AuthServiceApplication" />
+      <item itemvalue="Spring Boot.GatewayServiceApplication" />
+      <item itemvalue="Spring Boot.TESTAuthServiceApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AuthServiceApplicationTests" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -48,11 +206,42 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1707904483729</updated>
-      <workItem from="1707904484800" duration="1000" />
+      <workItem from="1707904484800" duration="8202000" />
+      <workItem from="1707912703146" duration="596000" />
+      <workItem from="1707924720883" duration="236000" />
+      <workItem from="1707924967150" duration="847000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial Commit">
+      <option name="closed" value="true" />
+      <created>1707904604480</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1707904604480</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

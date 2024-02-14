@@ -1,0 +1,48 @@
+server:
+  port: 5100
+  servlet:
+    contextPath: "/api/v1"
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: ApiGateway
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowCredentials: true
+            allowedOrigins:
+              - "http://localhost:5000"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - OPTIONS
+      routes:
+        - id: login-route
+          uri: http://localhost:9000
+          predicates:
+            - Path=/api/v1/login/**
+          filters:
+            - RewritePath=/api/v1/login, /api/v1/security/login
+
+        - id: test-route
+          uri: https://jsonplaceholder.typicode.com
+          predicates:
+            - Path=/**
+          filters:
+            - name: SecurityFilter
+
+
+#        - id: admin-events-route
+#          uri: https://jsonplaceholder.typicode.com
+#          predicates:
+#            - Path=/todos/**
+#          filters:
+#            - name: SecurityFilter
+
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
