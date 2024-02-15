@@ -68,7 +68,7 @@ public class SecurityConfig {
                 .headers(h -> h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .anonymous(AbstractHttpConfigurer::disable)
                 .requestCache(RequestCacheConfigurer::disable)
-                .formLogin(form -> form.loginPage("/login").disable())
+                .formLogin(form -> form.usernameParameter("usernameOrEmail").loginPage("/login").disable())
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(l -> l.logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true))
                 .securityContext((securityContext) -> securityContext.requireExplicitSave(false))
@@ -77,6 +77,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/users/**").authenticated()
+                        .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/todos/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/test").authenticated()
@@ -88,15 +89,15 @@ public class SecurityConfig {
     }
 
     /**
-     * Это простейший AuthenticationProvider, реализованный в Spring Security.
-     * Он опирается на UserDetailsService для поиска имени пользователя, пароля и GrantedAuthority.
-     * DaoAuthenticationProvider идентифицирует пользователей, сравнивая пароль, присланный в UsernamePasswordAuthenticationToken, с паролем, который был загружен UserDetailsService.
+     * Это кастомный AuthenticationProvider, реализованный в Spring Security.
+     * Он опирается на UserDetailsService для поиска почты имени пользователя, пароля и GrantedAuthority.
+     * DaoAuthenticationProvider идентифицирует пользователей, сравнивая почту, пароль, присланный в UsernamePasswordAuthenticationToken, с паролем, который был загружен UserDetailsService.
      *
      * @return Экземпляр DaoAuthenticationProvider.
      */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider daoAuthenticationProvider = new CustomAuthenticationProvider(userService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder);
         daoAuthenticationProvider.setUserDetailsService(userService);
         return daoAuthenticationProvider;

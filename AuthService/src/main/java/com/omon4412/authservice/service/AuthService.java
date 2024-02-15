@@ -33,50 +33,62 @@ public class AuthService {
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
     private final SessionRegistry sessionRegistry;
+    private final UserMapper userMapper;
 
     public UserDto createSession(@RequestBody LoginRequest authRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsernameOrEmail(), authRequest.getPassword()));
 
+            User user = userService.findByUsername(authRequest.getUsernameOrEmail())
+                    .or(() -> userService.findByEmail(authRequest.getUsernameOrEmail()))
+                    .orElseThrow(() -> {
+                        String errorMessage = "Неверный логин или пароль";
+                        log.error(errorMessage + " от " + authRequest.getUsernameOrEmail());
+                        return new BadRequestException(errorMessage);
+                    });
 
-            User user = userService.findByUsername(authRequest.getUsername()).orElseThrow(() -> {
-                String errorMessage = "User with this login not found";
-                log.error(errorMessage + " by " + authRequest.getUsername());
-                return new NotFoundException(errorMessage);
-            });
             if (user.isLocked()) {
-                String errorMessage = "Authentication failed";
-                log.error(errorMessage + " by locked " + authRequest.getUsername());
+                String errorMessage = "Ошибка авторизации";
+                log.error(errorMessage + " заблокирован администратором " + authRequest.getUsernameOrEmail());
                 throw new UnauthorizedException(errorMessage);
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.info("The user is logged in - " + authRequest.getUsername());
-            return UserMapper.toUserDto(user);
+            log.info("Пользователь вошёл - " + authRequest.getUsernameOrEmail());
+            return userMapper.toUserDto(user);
         } catch (AuthenticationException e) {
-            String errorMessage = "Authentication failed";
+            String errorMessage = "Ошибка авторизации";
             log.error(errorMessage);
             throw new UnauthorizedException(errorMessage);
         }
     }
 
-//    public Boolean validateSession(HttpServletRequest request) {
-//        HttpSession session = request.getSession(false);
-//        if (session == null) {
-//            return false;
-//        } else {
-//            SessionInformation sessionInformation = sessionRegistry.getSessionInformation(session.getId());
-//            return sessionInformation != null;
-//        }
-//    }
+    @Transactional
+    public UserDto createNewUser(@RequestBody NewUserRequest registrationUserDto) {
+        if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
+            String errorMessage = "Пользователь с таким username уже существует";
+            log.error(errorMessage);
+            throw new BadRequestException(errorMessage);
+        }
+        if (userService.findByEmail(registrationUserDto.getEmail()).isPresent()) {
+            String errorMessage = "Пользователь с таким email уже существует";
+            log.error(errorMessage);
+            throw new BadRequestException(errorMessage);
+        }
+        User user = userService.createNewUser(registrationUserDto);
+        UserDto userDto = userMapper.toUserDto(user);
+        String errorMessage = String.format("Пользователь создан: %s", userDto.toString());
+        log.info(errorMessage);
+        return userDto;
+    }
 
     @Transactional
     public String lockUser(Principal principal, Long userId) {
         User user = userService.findById(userId);
         User admin = userService.findByUsername(principal.getName()).orElseThrow(() -> {
-            String errorMessage = String.format("Пользователь %s не найден", principal.getName());
+            String errorMessage = String.format("Пользователь {%s} не найден", principal.getName());
             log.error(errorMessage);
-            return new NotFoundException("errorMessage");
+            return new NotFoundException(errorMessage);
         });
         if (userId.equals(admin.getId())) {
             String errorMessage = "Нельзя заблокировать самого себя";
@@ -84,7 +96,7 @@ public class AuthService {
             throw new BadRequestException(errorMessage);
         }
         if (user.isLocked()) {
-            String errorMessage = String.format("User {%d} is already locked", userId);
+            String errorMessage = String.format("Пользователь {%d} уже заблокирован", userId);
             log.warn(errorMessage);
             throw new BadRequestException(errorMessage);
         }
@@ -94,7 +106,7 @@ public class AuthService {
         for (SessionInformation session : sessions) {
             session.expireNow();
         }
-        String errorMessage = String.format("User({%d}) locked by admin({%s})", userId, principal.getName());
+        String errorMessage = String.format("Пользователь {%d} заблокирован администратором {%s}", userId, principal.getName());
         log.info(errorMessage);
         return errorMessage;
     }
@@ -103,9 +115,9 @@ public class AuthService {
     public String unlockUser(Principal principal, Long userId) {
         User user = userService.findById(userId);
         User admin = userService.findByUsername(principal.getName()).orElseThrow(() -> {
-            String errorMessage = String.format("Пользователь %s не найден", principal.getName());
+            String errorMessage = String.format("Пользователь {%s} не найден", principal.getName());
             log.error(errorMessage);
-            return new NotFoundException("errorMessage");
+            return new NotFoundException(errorMessage);
         });
         if (userId.equals(admin.getId())) {
             String errorMessage = "Нельзя разблокировать самого себя";
@@ -113,28 +125,14 @@ public class AuthService {
             throw new BadRequestException(errorMessage);
         }
         if (!user.isLocked()) {
-            String errorMessage = String.format("User {%d} is already unlocked", userId);
+            String errorMessage = String.format("Пользователь {%d} уже разблокирован", userId);
             log.warn(errorMessage);
             throw new BadRequestException(errorMessage);
         }
         user.setLocked(false);
         userRepository.save(user);
-        String errorMessage = String.format("User({%d}) unlocked by admin({%s})", userId, principal.getName());
+        String errorMessage = String.format("Пользователь {%d} разблокирован администратором {%s}", userId, principal.getName());
         log.info(errorMessage);
         return errorMessage;
-    }
-
-    @Transactional
-    public UserDto createNewUser(@RequestBody NewUserRequest registrationUserDto) {
-        if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
-            String errorMessage = "The user with the specified name already exists";
-            log.error(errorMessage);
-            throw new BadRequestException(errorMessage);
-        }
-        User user = userService.createNewUser(registrationUserDto);
-        UserDto userDto = UserMapper.toUserDto(user);
-        String errorMessage = String.format("The user has been created: %s", userDto.toString());
-        log.info(errorMessage);
-        return userDto;
     }
 }

@@ -2,42 +2,21 @@ package com.omon4412.authservice.service;
 
 
 import com.omon4412.authservice.dto.NewUserRequest;
+import com.omon4412.authservice.dto.UserFullDto;
 import com.omon4412.authservice.exception.NotFoundException;
 import com.omon4412.authservice.model.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.security.Principal;
 import java.util.Optional;
 
 /**
  * Сервис для управления пользователями.
  */
-public interface UserService {
-
-//    /**
-//     * Добавляет нового пользователя.
-//     *
-//     * @param user Новый пользователь.
-//     * @return Добавленный пользователь.
-//     */
-//    UserDto addUser(NewUserRequest user);
-//
-//    /**
-//     * Удаляет пользователя по его идентификатору.
-//     *
-//     * @param userId Идентификатор пользователя.
-//     */
-//    void deleteUserById(long userId);
-//
-//    /**
-//     * Получает коллекцию пользователей с применением пагинации и фильтра по идентификаторам.
-//     *
-//     * @param ids  Список идентификаторов.
-//     * @param from Начальный индекс для пагинации.
-//     * @param size Количество элементов на странице.
-//     * @return Коллекция пользователей с учетом пагинации.
-//     */
-//    Collection<User> getUsers(Collection<Long> ids, Integer from, Integer size);
-
+public interface UserService extends UserDetailsService {
     Optional<User> findByUsername(String username);
+
+    Optional<User> findByEmail(String email);
 
     /**
      * Получает User для заданного идентификатора пользователя.
@@ -48,7 +27,13 @@ public interface UserService {
      */
     User findById(long userId);
 
+    /**
+     * Добавляет нового пользователя.
+     *
+     * @param registrationUserDto Данные нового пользователя.
+     * @return Добавленный пользователь.
+     */
     User createNewUser(NewUserRequest registrationUserDto);
-//
-//    UserInfo getUserInfo(Long userId);
+
+    UserFullDto getCurrentUserInfo(Principal principal);
 }

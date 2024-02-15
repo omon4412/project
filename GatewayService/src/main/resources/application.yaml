@@ -28,6 +28,14 @@ spring:
           filters:
             - RewritePath=/api/v1/login, /api/v1/security/login
 
+        - id: userinfo-route
+          uri: http://localhost:9000
+          predicates:
+            - Path=/api/v1/user/**
+          filters:
+            - RewritePath=/api/v1/user, /api/v1/security/user
+            - name: SecurityFilter
+
         - id: test-route
           uri: https://jsonplaceholder.typicode.com
           predicates:
