@@ -40,3 +40,5 @@ build/
 /GatewayService/.mvn/
 /AuthService/.idea/
 /GatewayService/.idea/
+/Frontend/.idea/
+/.idea/

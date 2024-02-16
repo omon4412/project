@@ -4,19 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c6aeb7b-3e45-43b6-aa41-6b538a67f156" name="Changes" comment="15.02.2024">
-      <change afterPath="$PROJECT_DIR$/AuthService/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AuthService/src/test/java/com/omon4412/authservice/service/RoleServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/AuthService/src/test/java/com/omon4412/authservice/service/UserServiceImplTest.java" afterDir="false" />
+    <list default="true" id="7c6aeb7b-3e45-43b6-aa41-6b538a67f156" name="Changes" comment="test: Добавил тесты для всех service в AuthService">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/LoginRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/LoginRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/RoleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/dto/RoleDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/RoleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/java/com/omon4412/authservice/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuthService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/AuthService/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GatewayService/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/GatewayService/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +170,7 @@
       <workItem from="1707924967150" duration="1708000" />
       <workItem from="1707928558873" duration="40000" />
       <workItem from="1707991470647" duration="1323000" />
-      <workItem from="1708082424728" duration="308000" />
+      <workItem from="1708082424728" duration="664000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -215,7 +204,15 @@
       <option name="project" value="LOCAL" />
       <updated>1708010445765</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="test: Добавил тесты для всех service в AuthService">
+      <option name="closed" value="true" />
+      <created>1708082887556</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1708082887556</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +234,8 @@
     <MESSAGE value="14.02.2024" />
     <MESSAGE value="add frontend template" />
     <MESSAGE value="15.02.2024" />
-    <option name="LAST_COMMIT_MESSAGE" value="15.02.2024" />
+    <MESSAGE value="test: Добавил тесты для всех service в AuthService" />
+    <option name="LAST_COMMIT_MESSAGE" value="test: Добавил тесты для всех service в AuthService" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
