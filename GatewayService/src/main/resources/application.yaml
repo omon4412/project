@@ -36,12 +36,12 @@ spring:
             - RewritePath=/api/v1/user, /api/v1/security/user
             - name: SecurityFilter
 
-        - id: test-route
-          uri: https://jsonplaceholder.typicode.com
-          predicates:
-            - Path=/**
-          filters:
-            - name: SecurityFilter
+#        - id: test-route
+#          uri: https://jsonplaceholder.typicode.com
+#          predicates:
+#            - Path=/**
+#          filters:
+#            - name: SecurityFilter
 
 
 #        - id: admin-events-route

@@ -48,10 +48,11 @@ public class SecurityConfig {
      * Реестр всех сессий.
      */
     private final SessionRegistry sessionRegistry;
+    private static final int duration = 100;
     /**
      * Продолжительность сессии.
      */
-    private static final Duration maxInactiveInterval = Duration.ofMinutes(10);
+    private static final Duration maxInactiveInterval = Duration.ofMinutes(duration);
 
     /**
      * Этот метод определяет набор конфигураций безопасности, используя предоставленный объект {@link HttpSecurity}.

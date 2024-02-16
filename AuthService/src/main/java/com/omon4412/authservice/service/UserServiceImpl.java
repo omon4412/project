@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserFullDto getCurrentUserInfo(Principal principal) {
         User user = findByUsername(principal.getName()).orElseThrow(() -> {
-            String errorMessage = String.format("Пользователь %s не найден", principal.getName());
+            String errorMessage = String.format("Пользователь {%s} не найден", principal.getName());
             log.error(errorMessage);
             return new NotFoundException(errorMessage);
         });
@@ -76,9 +76,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(long userId) {
-        String message = String.format("Пользователь ID={%d} не найден", userId);
-        log.error(message);
         return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(message));
+                .orElseThrow(() -> {
+                    String message = String.format("Пользователь ID={%d} не найден", userId);
+                    log.error(message);
+                    return new NotFoundException(message);
+                });
     }
 }
