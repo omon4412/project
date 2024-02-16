@@ -1,5 +1,6 @@
 package com.omon4412.authservice.service;
 
+import com.omon4412.authservice.config.KafkaProducer;
 import com.omon4412.authservice.dto.LoginRequest;
 import com.omon4412.authservice.dto.NewUserRequest;
 import com.omon4412.authservice.dto.UserDto;
@@ -34,6 +35,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final SessionRegistry sessionRegistry;
     private final UserMapper userMapper;
+    private final KafkaProducer kafkaProducer;
 
     public UserDto createSession(@RequestBody LoginRequest authRequest) {
         try {
@@ -54,7 +56,8 @@ public class AuthService {
                 throw new UnauthorizedException(errorMessage);
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            log.info("Пользователь вошёл - " + authRequest.getUsernameOrEmail());
+            log.info("Пользователь входит - " + authentication.getName());
+            log.info(kafkaProducer.sendMessage("Пользователь вошёл - " + authentication.getName()));
             return userMapper.toUserDto(user);
         } catch (AuthenticationException e) {
             String errorMessage = "Ошибка авторизации";

@@ -179,6 +179,17 @@ public class ErrorHandler {
                 .build();
     }
 
+    @ExceptionHandler(KafkaMessageException.class)
+    @ResponseStatus(HttpStatus.GATEWAY_TIMEOUT)
+    public ApiError handleKafkaMessageException(KafkaMessageException ex) {
+        return ApiError.builder()
+                .message(ex.getMessage())
+                .reason("Ошибка сервера, повторите ещё раз")
+                .status(HttpStatus.GATEWAY_TIMEOUT.toString())
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
     /**
      * Обработчик всевозможных исключений во время работы программы.
      *
