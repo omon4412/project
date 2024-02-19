@@ -9,8 +9,8 @@
         <form @submit.prevent>
           <label for="email">Email</label>
           <custom-input type="text" id="email" placeholder="example@test.ru"
-                 :style="{ boxShadow: badCredential ? '0px 2px 0px 0px rgb(185 97 97)' : 'none' }"
-                 v-model="credentials.userName" autocomplete="off"/>
+                        :style="{ boxShadow: badCredential ? '0px 2px 0px 0px rgb(185 97 97)' : 'none' }"
+                        v-model="credentials.usernameOrEmail" autocomplete="off"/>
           <label for="password">Password</label>&nbsp;
           <font-awesome-icon v-if="hidePassword" :icon="['fas', 'eye']" @click="hidePassword = !hidePassword"/>
           <font-awesome-icon v-else :icon="['fas', 'eye-slash']" @click="hidePassword = !hidePassword"/>
@@ -37,7 +37,7 @@ export default {
       hidePassword: true,
       badCredential: false,
       credentials: {
-        userName: '',
+        usernameOrEmail: '',
         password: ''
       },
     }
@@ -46,7 +46,7 @@ export default {
     async fetchLogin() {
       try {
         const response = await axios.post('http://localhost:5100/api/v1/login', {
-          "username": this.credentials.userName,
+          "usernameOrEmail": this.credentials.usernameOrEmail,
           "password": this.credentials.password
         }, {
           withCredentials: true
@@ -65,16 +65,13 @@ export default {
       }
     },
     checkSession() {
-      // Здесь предполагается использование библиотеки для выполнения HTTP-запросов, например, axios
-      axios.post('http://localhost:5100/validate-session', {}, {withCredentials: true})
-          .then(() => {
-            // Куки "SESSION" существует, можно совершить необходимые действия
-            console.log('Yes');
+      axios.get('http://localhost:5100/api/v1/user', {withCredentials: true})
+          .then(response => {
+            console.log(response);
             router.push('/');
           })
-          .catch(() => {
-            // Куки "SESSION" отсутствует
-            console.log('No');
+          .catch((error) => {
+            console.log(error);
             router.push('/login');
           });
     }

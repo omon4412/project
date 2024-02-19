@@ -1,5 +1,6 @@
 package com.omon4412.authservice.service;
 
+import com.omon4412.authservice.config.KafkaProducer;
 import com.omon4412.authservice.dto.LoginRequest;
 import com.omon4412.authservice.dto.NewUserRequest;
 import com.omon4412.authservice.dto.UserDto;
@@ -46,6 +47,8 @@ class AuthServiceTest {
     private AuthenticationManager authenticationManager;
     @Mock
     private SessionRegistry sessionRegistry;
+    @Mock
+    private KafkaProducer kafkaProducer;
 
     @Captor
     private ArgumentCaptor<UsernamePasswordAuthenticationToken> authenticationTokenCaptor;
@@ -112,6 +115,7 @@ class AuthServiceTest {
                 .thenReturn(mock(Authentication.class));
         when(userService.findByUsername("user")).thenReturn(Optional.of(user));
         when(userMapper.toUserDto(user)).thenReturn(userDto);
+        when(kafkaProducer.sendMessage(any())).thenReturn("Пользователь вошёл");
 
         UserDto result = authService.createSession(authRequest);
 

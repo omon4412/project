@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
@@ -54,6 +55,8 @@ public class SecurityConfig {
      */
     private static final Duration maxInactiveInterval = Duration.ofMinutes(duration);
 
+    private final NewLoginFilter newLoginFilter;
+
     /**
      * Этот метод определяет набор конфигураций безопасности, используя предоставленный объект {@link HttpSecurity}.
      *
@@ -73,7 +76,9 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .logout(l -> l.logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true))
                 .securityContext((securityContext) -> securityContext.requireExplicitSave(false))
-                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).maximumSessions(2)
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .maximumSessions(1)
+                        .maxSessionsPreventsLogin(false)
                         .sessionRegistry(sessionRegistry)
                 )
                 .authorizeHttpRequests((authorize) -> authorize
@@ -85,6 +90,7 @@ public class SecurityConfig {
                         .requestMatchers("/test2").authenticated()
                         .anyRequest().permitAll()
                 )
+                .addFilterAfter(newLoginFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(c -> c.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
         return http.build();
     }

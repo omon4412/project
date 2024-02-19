@@ -49,3 +49,7 @@ build/
 /GatewayService/mvnw
 /GatewayService/mvnw.cmd
 /Frontend/node_modules/
+/NotificationService/.mvn/
+/NotificationService/HELP.md
+/NotificationService/mvnw
+/NotificationService/mvnw.cmd

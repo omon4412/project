@@ -8,8 +8,12 @@ import com.omon4412.authservice.exception.BadRequestException;
 import com.omon4412.authservice.exception.NotFoundException;
 import com.omon4412.authservice.exception.UnauthorizedException;
 import com.omon4412.authservice.mapper.UserMapper;
+import com.omon4412.authservice.model.NewLoginData;
+import com.omon4412.authservice.model.SessionDetails;
 import com.omon4412.authservice.model.User;
 import com.omon4412.authservice.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,6 +40,7 @@ public class AuthService {
     private final SessionRegistry sessionRegistry;
     private final UserMapper userMapper;
     private final KafkaProducer kafkaProducer;
+    private final HttpServletRequest request;
 
     public UserDto createSession(@RequestBody LoginRequest authRequest) {
         try {
@@ -57,7 +62,16 @@ public class AuthService {
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.info("Пользователь входит - " + authentication.getName());
-            log.info(kafkaProducer.sendMessage("Пользователь вошёл - " + authentication.getName()));
+
+            NewLoginData newLoginData = new NewLoginData();
+            newLoginData.setUserDto(userMapper.toUserDto(user));
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                SessionDetails sessionDetails = (SessionDetails) session.getAttribute("SESSION_DETAILS");
+                newLoginData.setSessionDetails(sessionDetails);
+            }
+            log.info(kafkaProducer.sendMessage(newLoginData));
+
             return userMapper.toUserDto(user);
         } catch (AuthenticationException e) {
             String errorMessage = "Ошибка авторизации";
