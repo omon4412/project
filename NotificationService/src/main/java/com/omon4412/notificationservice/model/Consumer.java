@@ -1,6 +1,8 @@
-package com.omon4412.notificationservice;
+package com.omon4412.notificationservice.model;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.omon4412.notificationservice.service.NotificationService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,7 @@ public class Consumer {
             notificationService.sendMessage(message);
         } catch (RuntimeException ex) {
             System.out.println(ex.getMessage());
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | MessagingException e) {
             throw new RuntimeException(e);
         }
     }

@@ -1,4 +1,4 @@
-package com.omon4412.notificationservice;
+package com.omon4412.notificationservice.model;
 
 import lombok.Data;
 

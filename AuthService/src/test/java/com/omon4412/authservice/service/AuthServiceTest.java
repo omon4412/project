@@ -10,6 +10,7 @@ import com.omon4412.authservice.exception.UnauthorizedException;
 import com.omon4412.authservice.mapper.UserMapper;
 import com.omon4412.authservice.model.User;
 import com.omon4412.authservice.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,6 +50,8 @@ class AuthServiceTest {
     private SessionRegistry sessionRegistry;
     @Mock
     private KafkaProducer kafkaProducer;
+    @Mock
+    private HttpServletRequest request;
 
     @Captor
     private ArgumentCaptor<UsernamePasswordAuthenticationToken> authenticationTokenCaptor;
@@ -116,6 +119,7 @@ class AuthServiceTest {
         when(userService.findByUsername("user")).thenReturn(Optional.of(user));
         when(userMapper.toUserDto(user)).thenReturn(userDto);
         when(kafkaProducer.sendMessage(any())).thenReturn("Пользователь вошёл");
+        when(request.getSession(false)).thenReturn(null);
 
         UserDto result = authService.createSession(authRequest);
 

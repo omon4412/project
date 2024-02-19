@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 @Component
-//@RequiredArgsConstructor
 public class KafkaProducer {
     @Value("${topic.name}")
     private String topicName;

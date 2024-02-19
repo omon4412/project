@@ -28,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -63,16 +64,18 @@ public class AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.info("Пользователь входит - " + authentication.getName());
 
+            UserDto userDto = userMapper.toUserDto(user);
             NewLoginData newLoginData = new NewLoginData();
-            newLoginData.setUserDto(userMapper.toUserDto(user));
+            newLoginData.setUserDto(userDto);
             HttpSession session = request.getSession(false);
             if (session != null) {
                 SessionDetails sessionDetails = (SessionDetails) session.getAttribute("SESSION_DETAILS");
                 newLoginData.setSessionDetails(sessionDetails);
+                newLoginData.setTimestamp(LocalDateTime.now());
             }
             log.info(kafkaProducer.sendMessage(newLoginData));
 
-            return userMapper.toUserDto(user);
+            return userDto;
         } catch (AuthenticationException e) {
             String errorMessage = "Ошибка авторизации";
             log.error(errorMessage);

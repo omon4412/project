@@ -53,3 +53,4 @@ build/
 /NotificationService/HELP.md
 /NotificationService/mvnw
 /NotificationService/mvnw.cmd
+/NotificationService/src/main/resources/env.properties

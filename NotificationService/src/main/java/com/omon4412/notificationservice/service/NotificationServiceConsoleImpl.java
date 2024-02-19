@@ -1,12 +1,11 @@
-package com.omon4412.notificationservice;
+package com.omon4412.notificationservice.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.omon4412.notificationservice.model.NewLoginData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-@Primary
 @Service
 public class NotificationServiceConsoleImpl implements NotificationService {
     @Autowired
@@ -15,8 +14,8 @@ public class NotificationServiceConsoleImpl implements NotificationService {
     @Override
     public void sendMessage(String message) throws JsonProcessingException {
         NewLoginData newLoginData = objectMapper.readValue(message, NewLoginData.class);
-        System.out.println("Обнаружен вход в аккаунт: " + newLoginData.userDto.username
-                + " с устройства: " + newLoginData.sessionDetails.getUserAgent()
-                + " c адреса: " + newLoginData.sessionDetails.getRemoteAddress());
+        System.out.println("Обнаружен вход в аккаунт: " + newLoginData.getUserDto().getUsername()
+                + " с устройства: " + newLoginData.getSessionDetails().getUserAgent()
+                + " c адреса: " + newLoginData.getSessionDetails().getRemoteAddress());
     }
 }
