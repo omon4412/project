@@ -4,6 +4,7 @@ import com.omon4412.authservice.dto.NewUserRequest;
 import com.omon4412.authservice.dto.RoleDto;
 import com.omon4412.authservice.dto.UserFullDto;
 import com.omon4412.authservice.exception.NotFoundException;
+import com.omon4412.authservice.exception.UnauthorizedException;
 import com.omon4412.authservice.mapper.UserMapper;
 import com.omon4412.authservice.model.Role;
 import com.omon4412.authservice.model.User;
@@ -116,12 +117,12 @@ class UserServiceImplTest {
     }
 
     @Test
-    void test_loadUserByUsername_whenUserNotFound_thenThrowNotFoundException() {
+    void test_loadUserByUsername_whenUserNotFound_thenThrowUnauthorizedException() {
         when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.empty());
         when(userRepository.findByEmail(user.getUsername())).thenReturn(Optional.empty());
 
-        NotFoundException exception = assertThrows(NotFoundException.class, () -> userService.loadUserByUsername(user.getUsername()));
-        assertEquals("Пользователь ID={user} не найден", exception.getMessage());
+        UnauthorizedException exception = assertThrows(UnauthorizedException.class, () -> userService.loadUserByUsername(user.getUsername()));
+        assertEquals("Ошибка авторизации", exception.getMessage());
 
         verify(userRepository).findByUsername(user.getUsername());
         verify(userRepository).findByEmail(user.getUsername());

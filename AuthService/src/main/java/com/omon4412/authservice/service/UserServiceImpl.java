@@ -3,6 +3,7 @@ package com.omon4412.authservice.service;
 import com.omon4412.authservice.dto.NewUserRequest;
 import com.omon4412.authservice.dto.UserFullDto;
 import com.omon4412.authservice.exception.NotFoundException;
+import com.omon4412.authservice.exception.UnauthorizedException;
 import com.omon4412.authservice.mapper.UserMapper;
 import com.omon4412.authservice.model.User;
 import com.omon4412.authservice.repository.UserRepository;
@@ -54,9 +55,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String usernameOrEmail) {
         User user = findByUsername(usernameOrEmail)
                 .or(() -> findByEmail(usernameOrEmail))
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("Пользователь ID={%s} не найден", usernameOrEmail)
-                ));
+                .orElseThrow(() -> new UnauthorizedException("Ошибка авторизации"));
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),

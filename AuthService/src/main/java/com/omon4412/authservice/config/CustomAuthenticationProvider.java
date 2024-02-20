@@ -17,6 +17,7 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String usernameOrEmail = authentication.getName();
         UserDetails userDetails = userDetailsService.loadUserByUsername(usernameOrEmail);
+        additionalAuthenticationChecks(userDetails, (UsernamePasswordAuthenticationToken) authentication);
         return new UsernamePasswordAuthenticationToken(userDetails,
                 authentication.getCredentials(), userDetails.getAuthorities());
     }

@@ -3,6 +3,7 @@ package com.omon4412.authservice.exception;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -139,6 +140,17 @@ public class ErrorHandler {
                 .message(ex.getMessage())
                 .reason("Authorization failed")
                 .status(HttpStatus.UNAUTHORIZED.toString())
+                .timestamp(LocalDateTime.now())
+                .build();
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleHttpMessageNotReadableException(final HttpMessageNotReadableException ex) {
+        return ApiError.builder()
+                .message(ex.getMessage())
+                .reason("Required request body is wrong")
+                .status(HttpStatus.BAD_REQUEST.toString())
                 .timestamp(LocalDateTime.now())
                 .build();
     }
