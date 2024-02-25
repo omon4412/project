@@ -46,10 +46,14 @@ export default {
   },
   methods: {
     async fetchLogin() {
+      if(this.credentials.usernameOrEmail.trim()==='' || this.credentials.password.trim() ===''){
+        this.badCredential = true;
+        this.$refs.notificationRef.showNotification("Пустой логин или пароль", 3000, "error");
+      }
       try {
         const response = await axios.post('http://localhost:5100/api/v1/login', {
-          "usernameOrEmail": this.credentials.usernameOrEmail,
-          "password": this.credentials.password
+          "usernameOrEmail": this.credentials.usernameOrEmail.trim(),
+          "password": this.credentials.password.trim()
         }, {
           withCredentials: true
         });
@@ -58,10 +62,9 @@ export default {
       } catch (e) {
         this.badCredential = true;
         if (e.response && e.response.status === 401) {
-          this.$refs.notificationRef.showNotification("Неверное имя пользователя или пароль", 3000, "error");
-          //alert('Ошибка входа: Неверное имя пользователя или пароль.');
-        } else if (e.response && e.response.status === 400) {
-          this.$refs.notificationRef.showNotification("Пустые логин или пароль", 3000, "error");
+          this.$refs.notificationRef.showNotification("Неверный логин или пароль", 3000, "error");
+        } else if (e.response && e.response.status === 500) {
+          this.$refs.notificationRef.showNotification("Сервер авторизации недоступен", 3000, "error");
         } else {
           this.$refs.notificationRef.showNotification(e.message, 3000, "error");
         }

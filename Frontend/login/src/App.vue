@@ -2,6 +2,7 @@
   <div class="app">
     <main-navbar :username="userName"></main-navbar>
     <router-view></router-view>
+    <main-footer></main-footer>
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 
 import MainNavbar from "@/components/MainNavbar.vue";
 import {mapState} from "vuex";
+import MainFooter from "@/components/MainFooter.vue";
 
 export default {
   data() {
@@ -16,7 +18,7 @@ export default {
       userName: ''
     }
   },
-  components: {MainNavbar},
+  components: {MainFooter, MainNavbar},
 
   mounted() {
   },

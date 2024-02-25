@@ -29,7 +29,6 @@ public class AuthController {
     public void logout(HttpServletRequest httpServletRequest) throws ServletException {
         httpServletRequest.logout();
         SecurityContextHolder.clearContext();
-        System.out.println("dfsdf");
     }
 
     @PostMapping("/register")

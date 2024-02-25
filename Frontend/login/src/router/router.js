@@ -1,9 +1,10 @@
 import {createRouter, createWebHistory} from "vue-router";
-import LoginPage from "@/pages/LoginPage.vue";
+import LoginPage from "@/pages/AuthArea/LoginPage.vue";
 import MainPage from "@/pages/MainPage.vue";
 import NotFound from "@/pages/NotFound.vue";
-import RegisterPage from "@/pages/RegisterPage.vue";
-import LogoutPage from "@/pages/LogoutPage.vue";
+import RegisterPage from "@/pages/AuthArea/RegisterPage.vue";
+import LogoutPage from "@/pages/AuthArea/LogoutPage.vue";
+import ProfilePage from "@/pages/AuthArea/ProfilePage.vue";
 
 const routes = [
     {
@@ -21,6 +22,10 @@ const routes = [
     {
         path: '/logout',
         component: LogoutPage
+    },
+    {
+        path: '/profile',
+        component: ProfilePage
     },
     {
         path: '/404',
