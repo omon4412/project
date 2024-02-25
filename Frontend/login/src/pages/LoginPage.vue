@@ -27,10 +27,9 @@
 <script>
 import axios from "axios";
 import router from "@/router/router";
-import CustomInput from "@/components/UI/CustomInput.vue";
+import checkSession from "@/pages/test";
 
 export default {
-  components: {CustomInput},
   data() {
     return {
       passwordFieldType: 'password',
@@ -52,29 +51,33 @@ export default {
           withCredentials: true
         });
         console.log(response.data)
+        //this.$store.commit('updateUsername', response.data.username);
         await router.push('/');
       } catch (e) {
         if (e.response && e.response.status === 401) {
           alert('Ошибка входа: Неверное имя пользователя или пароль.');
           this.badCredential = true;
         } else {
+          this.badCredential = true;
           alert(e);
         }
       } finally {
         this.credentials.password = ''
       }
     },
-    checkSession() {
-      axios.get('http://localhost:5100/api/v1/user', {withCredentials: true})
-          .then(response => {
-            console.log(response);
-            router.push('/');
-          })
-          .catch((error) => {
-            console.log(error);
-            router.push('/login');
-          });
-    }
+    // checkSession() {
+    //   axios.get('http://localhost:5100/api/v1/user', {withCredentials: true})
+    //       .then(response => {
+    //         console.log(response);
+    //         this.$store.commit('updateUsername', response.data.username);
+    //         router.push('/');
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //         this.$store.commit('updateUsername', null);
+    //         router.push('/login');
+    //       });
+    // }
   },
   watch: {
     hidePassword(newValue) {
@@ -84,9 +87,23 @@ export default {
       console.log(this.credentials)
     }
   },
-  mounted() {
-    this.checkSession()
+  async mounted() {
+    const session = await checkSession();
+    console.log(session + " login " + "mounted")
+    if (session !== '') {
+      await router.push('/');
+    }
   },
+  // async beforeRouteEnter(to, from, next) {
+  //   console.log(to, from);
+  //   const session = await checkSession();
+  //   console.log(session + " login " + "beforeRoute")
+  //   if (checkSession() === '') {
+  //     next("/login");
+  //   } else {
+  //     next();
+  //   }
+  // }
 }
 </script>
 
@@ -102,6 +119,8 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 div.main {
@@ -109,7 +128,7 @@ div.main {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: calc(100vh - 57px);
 }
 
 div.main div.login {

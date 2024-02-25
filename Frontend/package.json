@@ -2,6 +2,10 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
-    "@fortawesome/vue-fontawesome": "^3.0.0-5"
+    "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "bootstrap": "^5.3.3",
+    "mitt": "^3.0.1",
+    "vuex": "^4.1.0",
+    "vuex-persistedstate": "^4.1.0"
   }
 }
