@@ -3,6 +3,7 @@ import LoginPage from "@/pages/LoginPage.vue";
 import MainPage from "@/pages/MainPage.vue";
 import NotFound from "@/pages/NotFound.vue";
 import RegisterPage from "@/pages/RegisterPage.vue";
+import LogoutPage from "@/pages/LogoutPage.vue";
 
 const routes = [
     {
@@ -17,8 +18,18 @@ const routes = [
         path: '/register',
         component: RegisterPage
     },
-    {path: '/404', component: NotFound},
-    {path: "/:catchAll(.*)", redirect: '/404'}
+    {
+        path: '/logout',
+        component: LogoutPage
+    },
+    {
+        path: '/404',
+        component: NotFound
+    },
+    {
+        path: "/:catchAll(.*)",
+        redirect: '/404'
+    }
 ]
 
 const router = createRouter({

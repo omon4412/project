@@ -74,7 +74,7 @@ public class SecurityConfig {
                 .requestCache(RequestCacheConfigurer::disable)
                 .formLogin(form -> form.usernameParameter("usernameOrEmail").loginPage("/login").disable())
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .logout(l -> l.logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true))
+                .logout(l -> l.logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true).disable())
                 .securityContext((securityContext) -> securityContext.requireExplicitSave(false))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                         .maximumSessions(1)

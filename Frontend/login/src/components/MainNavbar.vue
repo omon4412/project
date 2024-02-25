@@ -50,7 +50,7 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
+              <li><a class="dropdown-item" href="#" @click="$router.push('/logout')">Logout</a></li>
             </ul>
           </li>
         </ul>
@@ -69,10 +69,6 @@
 </template>
 
 <script>
-// import checkSession from "@/pages/test";
-
-// import checkSession from "@/pages/test";
-
 export default {
   props: {
     username: {
@@ -90,26 +86,6 @@ export default {
       this.newuser = newUsername;
     }
   },
-  // computed:{
-  //   computedUsername(){
-  //     return this.$store.getters.getUsername;
-  //   }
-  // },
-  // watch: {
-  //   $route(to, from) {
-  //     console.log(to, from);
-  //     // to - новый маршрут
-  //     // from - предыдущий маршрут
-  //
-  //     if (checkSession() !== undefined) {
-  //       // Вы можете обновить состояние Vuex или другие данные внутри вашего navbar
-  //       // Вместо router.push('/') просто обновите состояние или данные внутри компонента
-  //     console.log("bebra");
-  //     } else {
-  //       this.$router.push('/login');
-  //     }
-  //   },
-  // },
 }
 </script>
 

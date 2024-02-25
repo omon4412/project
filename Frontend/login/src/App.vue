@@ -9,7 +9,6 @@
 
 import MainNavbar from "@/components/MainNavbar.vue";
 import {mapState} from "vuex";
-// import checkSession from "@/pages/test";
 
 export default {
   data() {
@@ -18,35 +17,8 @@ export default {
     }
   },
   components: {MainNavbar},
-  // computed: {
-  //   username(){
-  //     return this.$store.state.username;
-  //   },
-
-  //   '$route': {
-  //     handler() {
-  //       this.checkAndNavigate();
-  //     },
-  //     immediate: true, // Вызывать обработчик сразу после создания компонента
-  //   },
-  // },
-  //
-  // methods: {
-  //   async checkAndNavigate() {
-  //     const sessionResult = await checkSession();
-  //     if (sessionResult !== undefined) {
-  //       console.log("/");
-  //       router.push('/'); // Перейти на главную страницу
-  //     } else {
-  //       console.log("/login");
-  //       router.push('/login'); // Перейти на страницу входа
-  //     }
-  //   },
-  // },
-  //
 
   mounted() {
-    //checkSession();
   },
   computed: mapState(['username']),
   created() {
@@ -54,12 +26,6 @@ export default {
       if (mutation.type === 'updateUsername') {
         console.log(`Updating to ${state.username}`);
         this.userName = state.username;
-        // Do whatever makes sense now
-        // if (state.status === 'success') {
-        //   this.complex = {
-        //     deep: 'some deep object',
-        //   };
-        // }
       }
     });
   },

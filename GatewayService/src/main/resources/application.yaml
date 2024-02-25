@@ -28,6 +28,13 @@ spring:
           filters:
             - RewritePath=/api/v1/login, /api/v1/security/login
 
+        - id: logout-route
+          uri: http://localhost:9000
+          predicates:
+            - Path=/api/v1/logout/**
+          filters:
+            - RewritePath=/api/v1/logout, /api/v1/security/logout
+
         - id: userinfo-route
           uri: http://localhost:9000
           predicates:

@@ -54,7 +54,6 @@ export default {
           withCredentials: true
         });
         console.log(response.data)
-        //this.$store.commit('updateUsername', response.data.username);
         await router.push('/');
       } catch (e) {
         this.badCredential = true;
@@ -124,7 +123,7 @@ div.main div.login {
 
 div.main div.login div.description {
   background-color: #ffffff;
-  width: 300px;
+  width: 325px;
   padding: 35px;
 }
 
