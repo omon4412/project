@@ -1,4 +1,5 @@
 <template>
+  <notification-window ref="notificationRef"></notification-window>
   <div class="main">
     <div class="login">
       <div class="description">
@@ -15,8 +16,8 @@
           <font-awesome-icon v-if="hidePassword" :icon="['fas', 'eye']" @click="hidePassword = !hidePassword"/>
           <font-awesome-icon v-else :icon="['fas', 'eye-slash']" @click="hidePassword = !hidePassword"/>
           <custom-input :type="passwordFieldType" id="password"
-                 :style="{ boxShadow: badCredential ? '0px 2px 0px 0px rgb(185 97 97)' : 'none' }"
-                 v-model="credentials.password" placeholder="**********"/>
+                        :style="{ boxShadow: badCredential ? '0px 2px 0px 0px rgb(185 97 97)' : 'none' }"
+                        v-model="credentials.password" placeholder="**********"/>
           <button @click="fetchLogin">Log in</button>
         </form>
       </div>
@@ -28,8 +29,10 @@
 import axios from "axios";
 import router from "@/router/router";
 import checkSession from "@/pages/test";
+import NotificationWindow from "@/components/NotificationWindow.vue";
 
 export default {
+  components: {NotificationWindow},
   data() {
     return {
       passwordFieldType: 'password',
@@ -54,30 +57,19 @@ export default {
         //this.$store.commit('updateUsername', response.data.username);
         await router.push('/');
       } catch (e) {
+        this.badCredential = true;
         if (e.response && e.response.status === 401) {
-          alert('Ошибка входа: Неверное имя пользователя или пароль.');
-          this.badCredential = true;
+          this.$refs.notificationRef.showNotification("Неверное имя пользователя или пароль", 3000, "error");
+          //alert('Ошибка входа: Неверное имя пользователя или пароль.');
+        } else if (e.response && e.response.status === 400) {
+          this.$refs.notificationRef.showNotification("Пустые логин или пароль", 3000, "error");
         } else {
-          this.badCredential = true;
-          alert(e);
+          this.$refs.notificationRef.showNotification(e.message, 3000, "error");
         }
       } finally {
         this.credentials.password = ''
       }
     },
-    // checkSession() {
-    //   axios.get('http://localhost:5100/api/v1/user', {withCredentials: true})
-    //       .then(response => {
-    //         console.log(response);
-    //         this.$store.commit('updateUsername', response.data.username);
-    //         router.push('/');
-    //       })
-    //       .catch((error) => {
-    //         console.log(error);
-    //         this.$store.commit('updateUsername', null);
-    //         router.push('/login');
-    //       });
-    // }
   },
   watch: {
     hidePassword(newValue) {
@@ -94,16 +86,6 @@ export default {
       await router.push('/');
     }
   },
-  // async beforeRouteEnter(to, from, next) {
-  //   console.log(to, from);
-  //   const session = await checkSession();
-  //   console.log(session + " login " + "beforeRoute")
-  //   if (checkSession() === '') {
-  //     next("/login");
-  //   } else {
-  //     next();
-  //   }
-  // }
 }
 </script>
 
