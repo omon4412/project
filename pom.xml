@@ -17,6 +17,7 @@
     <modules>
         <module>AuthService</module>
         <module>GatewayService</module>
+        <module>NotificationService</module>
     </modules>
 
 </project>

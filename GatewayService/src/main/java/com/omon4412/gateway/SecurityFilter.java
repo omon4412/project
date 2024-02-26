@@ -1,5 +1,6 @@
 package com.omon4412.gateway;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpCookie;
@@ -13,6 +14,9 @@ import reactor.core.publisher.Mono;
 @Component
 public class SecurityFilter extends AbstractGatewayFilterFactory<SecurityFilter.Config> {
     private final WebClient.Builder webClientBuilder;
+
+    @Value("${authservice.url}")
+    private String authServiceUrl;
 
     public SecurityFilter(WebClient.Builder webClientBuilder) {
         super(Config.class);
@@ -29,7 +33,7 @@ public class SecurityFilter extends AbstractGatewayFilterFactory<SecurityFilter.
                 String requestPath = exchange.getRequest().getPath().toString();
                 return webClientBuilder.build()
                         .get()
-                        .uri("http://localhost:9000/api/v1/security" + requestPath)
+                        .uri(authServiceUrl + requestPath)
                         .header(HttpHeaders.COOKIE, sessionCookieValue.toString())
                         .exchange()
                         .flatMap(response -> {

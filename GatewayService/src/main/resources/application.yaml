@@ -2,6 +2,8 @@ server:
   port: 5100
   servlet:
     contextPath: "/api/v1"
+authservice:
+  url: http://localhost:9000/api/v1/security
 spring:
   main:
     web-application-type: reactive

@@ -1,5 +1,80 @@
 version: '3'
 services:
+  auth-service:
+    build: ./AuthService
+    image: auth-service
+    container_name: auth-service
+    ports:
+      - "9000:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-db:5432/auth-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SERVER_PORT=8080
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka1:29092,kafka2:29093
+    depends_on:
+      - auth-db
+
+  gateway:
+    build: ./GatewayService
+    image: gateway
+    container_name: gateway
+    ports:
+      - "5100:8080"
+    environment:
+      - SERVER_PORT=8080
+      - AUTHSERVICE_URL=http://auth-service:8080
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_ID=login-route
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_URI=http://auth-service:8080
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_PREDICATES[0]=Path=/api/v1/login/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[0]_FILTERS[0]=RewritePath=/api/v1/login, /api/v1/security/login
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_ID=logout-route
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_URI=http://auth-service:8080
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_PREDICATES[0]=Path=/api/v1/logout/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[1]_FILTERS[0]=RewritePath=/api/v1/logout, /api/v1/security/logout
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_ID=userinfo-route
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_URI=http://auth-service:8080
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_PREDICATES[0]=Path=/api/v1/user/**
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_FILTERS[0]=RewritePath=/api/v1/user, /api/v1/security/user
+      - SPRING_CLOUD_GATEWAY_ROUTES[2]_FILTERS[1]=SecurityFilter
+    depends_on:
+      - auth-db
+
+  notification-service:
+    build: ./NotificationService
+    image: notification-service
+    container_name: notification-service
+    ports:
+      - "9500:8080"
+    environment:
+      - SERVER_PORT=8080
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka1:29092,kafka2:29093
+      - MAIL_HOST=smtp.mail.ru
+      - MAIL_USERNAME=email
+      - MAIL_PASSWORD=1234
+      - MAIL_POST=465
+    depends_on:
+      - auth-db
+
+  frontend:
+    build: ./Frontend
+    image: frontend
+    container_name: frontend
+    ports:
+      - "5000:80"
+
+  auth-db:
+    image: postgres:16-alpine
+    container_name: auth-db
+    volumes:
+      - /var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=auth-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:

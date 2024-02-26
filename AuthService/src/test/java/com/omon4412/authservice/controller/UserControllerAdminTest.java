@@ -3,7 +3,6 @@ package com.omon4412.authservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.omon4412.authservice.config.SecurityConfig;
 import com.omon4412.authservice.dto.LoginRequest;
-import com.omon4412.authservice.dto.RoleDto;
 import com.omon4412.authservice.dto.UserDto;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,12 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @ActiveProfiles(value = "test")
 @SpringBootTest
@@ -42,6 +37,7 @@ class UserControllerAdminTest {
 
     @Autowired
     private MockMvc mockMvc;
+
     @BeforeEach
     void setUp() {
         loginRequestByUser = new LoginRequest("user", "123456g1G+!");
