@@ -7,7 +7,7 @@
 <script>
 import router from "@/router/router";
 
-import checkSession from "@/pages/test";
+import checkSession from "@/pages/check";
 
 export default {
   async mounted() {

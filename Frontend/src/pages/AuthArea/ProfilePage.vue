@@ -97,13 +97,13 @@
                   {{ this.phone }}
                 </div>
               </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-12">
-                  <a class="btn btn-info" target="__blank"
-                     href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Редактировать (NI)</a>
-                </div>
-              </div>
+<!--              <hr>-->
+<!--              <div class="row">-->
+<!--                <div class="col-sm-12">-->
+<!--                  <a class="btn btn-info" target="__blank"-->
+<!--                     href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Редактировать (NI)</a>-->
+<!--                </div>-->
+<!--              </div>-->
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@
 <script>
 import axios from "axios";
 import NotificationWindow from "@/components/NotificationWindow.vue";
-import checkSession from "@/pages/test";
+import checkSession from "@/pages/check";
 import router from "@/router/router";
 
 export default {

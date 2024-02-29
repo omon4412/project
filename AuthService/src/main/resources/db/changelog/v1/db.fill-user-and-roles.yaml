@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.fill-users-and-roles.yaml
+  - changeSet:
+      id: 4
+      author: omon4412
+      comment: Fill users and roles table
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: "user"
+              - column:
+                  name: password_hash
+                  value: "$2a$10$xyvEP/dHoo2Sdb8t6/0Fw.rObIOV9FMFPwbUfOMYJgIGYu7xvNxYy"
+              - column:
+                  name: email
+                  value: "user@4412.ru"
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: "admin"
+              - column:
+                  name: password_hash
+                  value: "$2a$10$xyvEP/dHoo2Sdb8t6/0Fw.rObIOV9FMFPwbUfOMYJgIGYu7xvNxYy"
+              - column:
+                  name: email
+                  value: "admin@4412.ru"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: "ROLE_USER"
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: "ROLE_ADMIN"
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: "1"
+              - column:
+                  name: role_id
+                  value: "1"
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  value: "2"
+              - column:
+                  name: role_id
+                  value: "2"
+      rollback:
+        - delete:
+            tableName: users
+            where: username in ('admin', 'user')
+        - delete:
+            tableName: roles
+            where: name in ('ROLE_ADMIN', 'ROLE_USER')
+        - delete:
+            tableName: users_roles
+            where: user_id in (1, 2)

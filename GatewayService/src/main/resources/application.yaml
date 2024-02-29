@@ -43,22 +43,15 @@ spring:
             - Path=/api/v1/user/**
           filters:
             - RewritePath=/api/v1/user, /api/v1/security/user
-            - name: SecurityFilter
+            - name: AccessSecurityFilter
 
-#        - id: test-route
-#          uri: https://jsonplaceholder.typicode.com
-#          predicates:
-#            - Path=/**
-#          filters:
-#            - name: SecurityFilter
-
-
-#        - id: admin-events-route
-#          uri: https://jsonplaceholder.typicode.com
-#          predicates:
-#            - Path=/todos/**
-#          filters:
-#            - name: SecurityFilter
+        - id: data-route
+          uri: http://localhost:7989
+          predicates:
+            - Path=/user/data/**
+          filters:
+            - name: AccessSecurityFilter
+            - name: AssignUserSecurityFilter
 
 logging:
   level:

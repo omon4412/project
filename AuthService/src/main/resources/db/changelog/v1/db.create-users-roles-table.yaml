@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.create-users-roles-table.yaml
+  - changeSet:
+      id: 3
+      author: omon4412
+      comment: Create users_roles table
+      changes:
+        - createTable:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: role_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: user_id
+            constraintName: fk_users__users_roles
+        - addForeignKeyConstraint:
+            baseTableName: users_roles
+            baseColumnNames: role_id
+            referencedTableName: roles
+            referencedColumnNames: role_id
+            constraintName: fk_roles__users_roles

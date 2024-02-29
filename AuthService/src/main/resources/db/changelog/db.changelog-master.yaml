@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - include:
+      file: v1/db.create-users-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: v1/db.create-roles-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: v1/db.create-users-roles-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: v1/db.fill-user-and-roles.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: v1/db.create-session-tables.yaml
+      relativeToChangelogFile: true

@@ -45,7 +45,7 @@ public class User implements Serializable {
     @Column(name = "password_hash")
     protected String password;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

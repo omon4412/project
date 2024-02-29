@@ -5,7 +5,7 @@ Not implemented
 </template>
 
 <script>
-import checkSession from "@/pages/test";
+import checkSession from "@/pages/check";
 import router from "@/router/router";
 
 export default {

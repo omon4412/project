@@ -28,7 +28,7 @@
 <script>
 import axios from "axios";
 import router from "@/router/router";
-import checkSession from "@/pages/test";
+import checkSession from "@/pages/check";
 import NotificationWindow from "@/components/NotificationWindow.vue";
 
 export default {

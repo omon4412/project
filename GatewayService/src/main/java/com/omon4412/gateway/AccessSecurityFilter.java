@@ -12,13 +12,13 @@ import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 @Component
-public class SecurityFilter extends AbstractGatewayFilterFactory<SecurityFilter.Config> {
+public class AccessSecurityFilter extends AbstractGatewayFilterFactory<AccessSecurityFilter.Config> {
     private final WebClient.Builder webClientBuilder;
 
     @Value("${authservice.url}")
     private String authServiceUrl;
 
-    public SecurityFilter(WebClient.Builder webClientBuilder) {
+    public AccessSecurityFilter(WebClient.Builder webClientBuilder) {
         super(Config.class);
         this.webClientBuilder = webClientBuilder;
     }
@@ -48,6 +48,5 @@ public class SecurityFilter extends AbstractGatewayFilterFactory<SecurityFilter.
     }
 
     public static class Config {
-        // Put the configuration properties
     }
 }

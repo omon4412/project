@@ -86,6 +86,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/todos/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/data/user/**").authenticated()
                         .requestMatchers("/test").authenticated()
                         .requestMatchers("/test2").authenticated()
                         .anyRequest().permitAll()
