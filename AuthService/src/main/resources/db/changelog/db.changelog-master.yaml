@@ -15,3 +15,9 @@ databaseChangeLog:
   - include:
       file: v1/db.create-session-tables.yaml
       relativeToChangelogFile: true
+  - include:
+      file: v1/db.add-new-column-users.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: v1/db.rename-column-users.yaml
+      relativeToChangelogFile: true

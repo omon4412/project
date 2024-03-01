@@ -18,7 +18,7 @@
                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
                      width="150">
                 <div class="mt-3">
-                  <h4 v-if="this.fullName!=='no'">{{ this.fullName }}</h4>
+                  <h4 v-if="this.fullName!==null">{{ this.fullName }}</h4>
                   <h4 v-else>{{ this.login }}</h4>
                   <hr>
                   <p class="text-secondary mb-1" v-for="role in roles" :key="role.name">{{ role.name }}</p>
@@ -136,10 +136,10 @@ export default {
         const response = await axios.get('http://localhost:5100/api/v1/user', {
           withCredentials: true
         });
-        this.fullName = 'no';
+        this.fullName = response.data.realName;
         this.login = response.data.username;
         this.email = response.data.email;
-        this.phone = 'no';
+        this.phone = response.data.phoneNumber;
         this.roles = response.data.roles;
       } catch (e) {
         this.badCredential = true;

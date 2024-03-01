@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.rename-column-users.yaml
+  - changeSet:
+      id: 1840rename-column-users
+      author: omon4412
+      comment: Rename column
+      changes:
+        - renameColumn:
+            tableName: users
+            oldColumnName: phoneNumber
+            newColumnName: phone_number

@@ -1,5 +1,6 @@
 package com.omon4412.authservice.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,4 +33,8 @@ public class UserFullDto implements UserInfo {
      * Названия ролей пользователя.
      */
     protected Collection<RoleDto> roles;
+
+    protected String realName;
+
+    protected String phoneNumber;
 }

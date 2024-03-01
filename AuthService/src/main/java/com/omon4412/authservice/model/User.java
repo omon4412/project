@@ -58,4 +58,10 @@ public class User implements Serializable {
 
     @Column(name = "is_locked")
     protected boolean isLocked;
+
+    @Column(name = "real_name")
+    protected String realName;
+
+    @Column(name = "phone_number")
+    protected String phoneNumber;
 }

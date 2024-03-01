@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.create-users-roles-table.yaml
+  - changeSet:
+      id: 1838create-users-roles-table
+      author: omon4412
+      comment: Add new column to users table
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: real_name
+                  type: varchar(150)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: phoneNumber
+                  type: varchar(20)
+                  constraints:
+                    nullable: true

@@ -24,7 +24,8 @@ public interface UserMapper {
             @Mapping(target = "id", source = "id"),
             @Mapping(target = "username", source = "username"),
             @Mapping(target = "email", source = "email"),
-            @Mapping(target = "roles", source = "roles")
+            @Mapping(target = "roles", source = "roles"),
+            @Mapping(target = "realName", source = "realName")
     })
     UserFullDto toUserFullDto(User user);
 
