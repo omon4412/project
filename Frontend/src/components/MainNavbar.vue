@@ -38,15 +38,21 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <ul v-if="newuser!==''" class="navbar-nav mb-2 mb-lg-0">
+        <ul v-if="newuser!==null" class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                data-bs-toggle="dropdown"
                aria-expanded="false">
-              {{ newuser }}
+
+              {{ newuser.username }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><router-link to="/profile" class="dropdown-item">Profile</router-link></li>
+              <li>
+                <router-link to="/profile" class="dropdown-item">Profile</router-link>
+              </li>
+              <li v-if="newuser.roles && newuser.roles.some(role => role.name === 'ROLE_ADMIN')">
+                <router-link to="/admin" class="dropdown-item">Admin панель</router-link>
+              </li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li>
                 <hr class="dropdown-divider">
@@ -75,8 +81,8 @@
 <script>
 export default {
   props: {
-    username: {
-      type: String,
+    user: {
+      type: Object,
       required: false
     }
   },
@@ -86,15 +92,15 @@ export default {
     }
   },
   watch: {
-    username(newUsername) {
-      this.newuser = newUsername;
+    user(newUser) {
+      this.newuser = newUser;
     }
   },
 }
 </script>
 
 <style scoped>
-.container-fluid{
+.container-fluid {
   margin-left: 20px;
   margin-right: 20px;
 }

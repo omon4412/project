@@ -1,6 +1,8 @@
 <template>
-  <div>
-    <h1>hello</h1>
+  <div class="page">
+    <div class="error-container">
+      <h1>Main</h1>
+    </div>
   </div>
 </template>
 
@@ -21,5 +23,10 @@ export default {
 </script>
 
 <style scoped>
-
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 113px);
+}
 </style>

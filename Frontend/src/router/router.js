@@ -5,6 +5,9 @@ import NotFound from "@/pages/NotFound.vue";
 import RegisterPage from "@/pages/AuthArea/RegisterPage.vue";
 import LogoutPage from "@/pages/AuthArea/LogoutPage.vue";
 import ProfilePage from "@/pages/AuthArea/ProfilePage.vue";
+import AdminPage from "@/pages/AuthArea/AdminPage.vue";
+import ForbiddenPage from "@/pages/ForbiddenPage.vue";
+import UsersPage from "@/pages/UsersPage.vue";
 
 const routes = [
     {
@@ -28,8 +31,26 @@ const routes = [
         component: ProfilePage
     },
     {
+        path: '/admin',
+        component: AdminPage,
+        children: [
+            {
+                path: 'users',
+                component: UsersPage,
+            },
+            {
+                path: 'test2',
+                component: ForbiddenPage,
+            },
+        ]
+    },
+    {
         path: '/404',
         component: NotFound
+    },
+    {
+        path: '/403',
+        component: ForbiddenPage
     },
     {
         path: "/:catchAll(.*)",

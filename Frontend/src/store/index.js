@@ -3,16 +3,23 @@ import createPersistedState from "vuex-persistedstate";
 
 export default createStore({
     state: {
-        username: ''
+        userData: null,
+        adminOpenPage: null
     },
-    getters:{
-        getUsername(state){
-            return state.username;
+    getters: {
+        getUser(state) {
+            return state.userData;
+        },
+        getAdminOpenPage(state) {
+            return state.adminOpenPage;
         }
     },
     mutations: {
-        updateUsername (state, newUsername) {
-            state.username = newUsername
+        updateUser(state, newUserData) {
+            state.userData = newUserData
+        },
+        updateAdminOpenPage(state, newAdminOpenPage) {
+            state.adminOpenPage = newAdminOpenPage
         },
     },
     plugins: [createPersistedState()]

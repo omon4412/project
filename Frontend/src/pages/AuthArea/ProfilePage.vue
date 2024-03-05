@@ -12,7 +12,7 @@
       </nav>
       <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
-          <div class="card">
+          <custom-card>
             <div class="card-body">
               <div class="d-flex flex-column align-items-center text-center">
                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
@@ -27,8 +27,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="card mt-3">
+          </custom-card>
+          <custom-card class="mt-3">
             <ul class="list-group list-group-flush">
               <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                 <h6 class="mb-0">
@@ -57,10 +57,10 @@
                 <span class="text-secondary">omon4412</span>
               </li>
             </ul>
-          </div>
+          </custom-card>
         </div>
         <div class="col-md-8">
-          <div class="card mb-3">
+          <custom-card>
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
@@ -97,15 +97,15 @@
                   {{ this.phone }}
                 </div>
               </div>
-<!--              <hr>-->
-<!--              <div class="row">-->
-<!--                <div class="col-sm-12">-->
-<!--                  <a class="btn btn-info" target="__blank"-->
-<!--                     href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Редактировать (NI)</a>-->
-<!--                </div>-->
-<!--              </div>-->
+              <!--              <hr>-->
+              <!--              <div class="row">-->
+              <!--                <div class="col-sm-12">-->
+              <!--                  <a class="btn btn-info" target="__blank"-->
+              <!--                     href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Редактировать (NI)</a>-->
+              <!--                </div>-->
+              <!--              </div>-->
             </div>
-          </div>
+          </custom-card>
         </div>
       </div>
 
@@ -115,12 +115,13 @@
 
 <script>
 import axios from "axios";
-import NotificationWindow from "@/components/NotificationWindow.vue";
+import NotificationWindow from "@/components/UI/NotificationWindow.vue";
 import checkSession from "@/pages/check";
 import router from "@/router/router";
+import CustomCard from "@/components/UI/CustomCard.vue";
 
 export default {
-  components: {NotificationWindow},
+  components: {CustomCard, NotificationWindow},
   data() {
     return {
       fullName: '',
@@ -167,28 +168,11 @@ export default {
 
 <style scoped>
 .container {
-  height: calc(100vh - 57px);
+  height: calc(100vh - 113px);
 }
 
 .main-body {
   padding: 15px;
-}
-
-.card {
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px 0px #666;
-}
-
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 0 solid rgba(0, 0, 0, .125);
-  border-radius: .25rem;
 }
 
 .card-body {

@@ -8,17 +8,17 @@
       </div>
       <div class="form">
         <form @submit.prevent>
-          <label for="email">Email</label>
+          <label for="email">Логин или Email</label>
           <custom-input type="text" id="email" placeholder="example@test.ru"
                         :style="{ boxShadow: badCredential ? '0px 2px 0px 0px rgb(185 97 97)' : 'none' }"
                         v-model="credentials.usernameOrEmail" autocomplete="off"/>
-          <label for="password">Password</label>&nbsp;
+          <label for="password">Пароль</label>&nbsp;
           <font-awesome-icon v-if="hidePassword" :icon="['fas', 'eye']" @click="hidePassword = !hidePassword"/>
           <font-awesome-icon v-else :icon="['fas', 'eye-slash']" @click="hidePassword = !hidePassword"/>
           <custom-input :type="passwordFieldType" id="password"
                         :style="{ boxShadow: badCredential ? '0px 2px 0px 0px rgb(185 97 97)' : 'none' }"
                         v-model="credentials.password" placeholder="**********"/>
-          <button @click="fetchLogin">Log in</button>
+          <custom-button @click="fetchLogin">Войти</custom-button>
         </form>
       </div>
     </div>
@@ -29,10 +29,8 @@
 import axios from "axios";
 import router from "@/router/router";
 import checkSession from "@/pages/check";
-import NotificationWindow from "@/components/NotificationWindow.vue";
 
 export default {
-  components: {NotificationWindow},
   data() {
     return {
       passwordFieldType: 'password',
@@ -46,9 +44,10 @@ export default {
   },
   methods: {
     async fetchLogin() {
-      if(this.credentials.usernameOrEmail.trim()==='' || this.credentials.password.trim() ===''){
+      if (this.credentials.usernameOrEmail.trim() === '' || this.credentials.password.trim() === '') {
         this.badCredential = true;
         this.$refs.notificationRef.showNotification("Пустой логин или пароль", 3000, "error");
+        return;
       }
       try {
         const response = await axios.post('http://localhost:5100/api/v1/login', {
@@ -166,14 +165,6 @@ div.main div.login div.form ::placeholder {
   opacity: 1;
 }
 
-div.main div.login div.form button {
-  background-color: #ffffff;
-  cursor: pointer;
-  border: none;
-  padding: 10px;
-  transition: background-color 0.2s ease-in-out;
-  width: 100%;
-}
 
 div.main div.login div.form button:hover {
   background-color: #eeeeee;
