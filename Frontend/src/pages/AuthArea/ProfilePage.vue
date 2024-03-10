@@ -1,6 +1,49 @@
 <template>
   <notification-window ref="notificationRef"></notification-window>
-  <profile-component :email="email" :fullName="fullName" :login="login" :phone="phone" :roles="roles"></profile-component>
+  <profile-component :email="email" :fullName="fullName" :login="login" :phone="phone" :roles="roles">
+    <template v-slot:slot1>
+      <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <router-link to="/">Home</router-link>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+        </ol>
+      </nav>
+    </template>
+    <template v-slot:slot2>
+      <div class="mt-3">
+        <custom-card>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-3">
+                <h6 class="mb-0">IP</h6>
+              </div>
+              <div class="col-sm-7">
+                <h6 class="mb-0">User Agent</h6>
+              </div>
+              <div class="col-sm-2">
+                <h6 class="mb-0">Действие</h6>
+              </div>
+            </div>
+            <hr>
+            <div class="row" v-for="session in sessions" :key="session.id">
+              <div class="col-sm-3 text-secondary">
+                <h6 class="mb-0">{{session.remoteAddress}}</h6>
+              </div>
+              <div class="col-sm-7 text-secondary">
+                {{session.userAgent}}
+              </div>
+              <div class="col-sm-2">
+                <button class="btn btn-danger">Выйти</button>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </custom-card>
+      </div>
+    </template>
+  </profile-component>
 </template>
 
 <script>
@@ -19,6 +62,7 @@ export default {
       email: '',
       phone: '',
       roles: [],
+      sessions: []
     }
   },
   methods: {
@@ -33,14 +77,18 @@ export default {
         this.phone = response.data.phoneNumber;
         this.roles = response.data.roles;
       } catch (e) {
-        this.badCredential = true;
-        if (e.response && e.response.status === 401) {
-          this.$refs.notificationRef.showNotification("Неверный логин или пароль", 3000, "error");
-        } else if (e.response && e.response.status === 500) {
-          this.$refs.notificationRef.showNotification("Сервер авторизации недоступен", 3000, "error");
-        } else {
-          this.$refs.notificationRef.showNotification(e.message, 3000, "error");
-        }
+        this.$refs.notificationRef.showNotification(e.message, 3000, "error");
+      }
+    },
+    async fetchSessionsData() {
+      try {
+        const response = await axios.get('http://localhost:5100/api/v1/user/sessions', {
+          withCredentials: true
+        });
+        this.sessions = response.data;
+        console.log(this.sessions)
+      } catch (e) {
+        this.$refs.notificationRef.showNotification(e.message, 3000, "error");
       }
     },
   },
@@ -52,6 +100,7 @@ export default {
       return
     }
     await this.fetchUserData();
+    await this.fetchSessionsData();
   },
 }
 </script>

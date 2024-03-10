@@ -3,7 +3,11 @@
   <div>
     <custom-dialog v-model:show="userDialogVisible"  v-model:route="routeUser">
       <profile-component style="height: 100% !important;"
-          :email="currentUser.email" :fullName="currentUser.realName" :login="currentUser.username" :phone="currentUser.phoneNumber" :roles="currentUser.roles"></profile-component>
+          :email="currentUser.email" :fullName="currentUser.realName" :login="currentUser.username" :phone="currentUser.phoneNumber" :roles="currentUser.roles">
+        <template v-slot:slot1>
+        <h2>Карточка пользователя - {{currentUser.id}}</h2>
+        </template>
+      </profile-component>
     </custom-dialog>
     <h1>Users</h1>
     <table class="table">
