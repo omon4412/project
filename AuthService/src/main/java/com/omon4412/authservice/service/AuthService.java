@@ -169,4 +169,8 @@ public class AuthService {
 
         return new PageImpl<>(userFullDtos, pageable, userPage.getTotalElements());
     }
+
+    public UserFullDto getUserById(Long userId) {
+        return userMapper.toUserFullDto(userService.findById(userId));
+    }
 }

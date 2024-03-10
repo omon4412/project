@@ -1,6 +1,10 @@
 <template>
   <notification-window ref="notificationRef"></notification-window>
   <div>
+    <custom-dialog v-model:show="userDialogVisible"  v-model:route="routeUser">
+      <profile-component style="height: 100% !important;"
+          :email="currentUser.email" :fullName="currentUser.realName" :login="currentUser.username" :phone="currentUser.phoneNumber" :roles="currentUser.roles"></profile-component>
+    </custom-dialog>
     <h1>Users</h1>
     <table class="table">
       <thead>
@@ -11,16 +15,18 @@
         <th scope="col">Email</th>
         <th scope="col">Телефон</th>
         <th scope="col">Роли</th>
+        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
-      <tr v-for="user in users" :key="user.id">
+      <tr v-for="user in users" :key="user.id" @click="aboutUser(user)">
         <td>{{ user.id }}</td>
         <td>{{ user.realName }}</td>
         <td>{{ user.username }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.phoneNumber }}</td>
         <td>{{ user.roles }}</td>
+<!--        <router-link :to="{ path: '/admin/users/' + user.id }">Профиль</router-link>-->
       </tr>
       </tbody>
     </table>
@@ -30,8 +36,10 @@
 
 <script>
 import axios from "axios";
+import ProfileComponent from "@/components/ProfileComponent.vue";
 
 export default {
+  components: {ProfileComponent},
   data() {
     return {
       users: [],
@@ -40,6 +48,9 @@ export default {
       page: 0,
       size: 10,
       totalPages: 0,
+      userDialogVisible: false,
+      currentUser: null,
+      routeUser: '',
     }
   },
   methods: {
@@ -61,6 +72,11 @@ export default {
       } catch (e) {
         this.$refs.notificationRef.showNotification(e.message, 3000, "error");
       }
+    },
+    aboutUser(user){
+      console.log(user)
+      this.currentUser = user;
+      this.userDialogVisible = true;
     }
   },
   async mounted() {

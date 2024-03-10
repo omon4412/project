@@ -22,6 +22,11 @@ public class UserControllerAdmin {
         return authService.getUsers(from, size);
     }
 
+    @GetMapping("/{userId}")
+    public UserFullDto getUserById(@PathVariable Long userId){
+        return authService.getUserById(userId);
+    }
+
     @PostMapping("/{userId}/lock")
     public String lockUser(Principal principal, @PathVariable Long userId) {
         return authService.lockUser(principal, userId);

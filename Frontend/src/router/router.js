@@ -39,6 +39,10 @@ const routes = [
                 component: UsersPage,
             },
             {
+                path: 'users/:userId',
+                component: ProfilePage
+            },
+            {
                 path: 'test2',
                 component: ForbiddenPage,
             },
