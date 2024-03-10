@@ -1,8 +1,8 @@
 <template>
   <div class="error-page">
     <div class="error-container">
-      <h1>404</h1>
-      <p>Страница не найдена</p>
+      <h1>403</h1>
+      <p>Доступ запрещён</p>
       <router-link to="/">На главную</router-link>
     </div>
   </div>

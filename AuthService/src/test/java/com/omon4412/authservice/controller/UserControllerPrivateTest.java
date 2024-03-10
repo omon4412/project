@@ -44,9 +44,14 @@ class UserControllerPrivateTest {
     @BeforeEach
     void setUp() {
         loginRequest = new LoginRequest("user", "123456g1G+!");
-        userFullDto = new UserFullDto(1L, "user", "user@4412.ru", new ArrayList<>() {{
-            add(new RoleDto("ROLE_USER"));
-        }});
+        userFullDto = UserFullDto.builder()
+                .id(1L)
+                .username("user")
+                .email("user@4412.ru")
+                .roles(new ArrayList<>() {{
+                    add(new RoleDto("ROLE_USER"));
+                }})
+                .build();
     }
 
     @Test

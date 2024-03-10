@@ -45,6 +45,14 @@ spring:
             - RewritePath=/api/v1/user, /api/v1/security/user
             - name: AccessSecurityFilter
 
+        - id: users-route
+          uri: http://localhost:9000
+          predicates:
+            - Path=/api/v1/admin/users/**
+          filters:
+            - RewritePath=/api/v1/admin/users, /api/v1/security/admin/users
+            - name: AccessSecurityFilter
+
         - id: data-route
           uri: http://localhost:7989
           predicates:

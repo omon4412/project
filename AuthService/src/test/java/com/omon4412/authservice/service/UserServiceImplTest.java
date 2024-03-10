@@ -58,9 +58,14 @@ class UserServiceImplTest {
             add(new Role(1, "ROLE_USER"));
         }});
 
-        userFullDto = new UserFullDto(1L, "user", "email", new ArrayList<>() {{
-            add(new RoleDto("ROLE_USER"));
-        }});
+        userFullDto = UserFullDto.builder()
+                .id(1L)
+                .username("user")
+                .email("email")
+                .roles(new ArrayList<>() {{
+                    add(new RoleDto("ROLE_USER"));
+                }})
+                .build();
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.omon4412.authservice.config.KafkaProducer;
 import com.omon4412.authservice.dto.LoginRequest;
 import com.omon4412.authservice.dto.NewUserRequest;
 import com.omon4412.authservice.dto.UserDto;
+import com.omon4412.authservice.dto.UserFullDto;
 import com.omon4412.authservice.exception.BadRequestException;
 import com.omon4412.authservice.exception.NotFoundException;
 import com.omon4412.authservice.exception.UnauthorizedException;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -154,5 +157,20 @@ public class AuthService {
         String errorMessage = String.format("Пользователь {%d} разблокирован администратором {%s}", userId, principal.getName());
         log.info(errorMessage);
         return errorMessage;
+    }
+
+    public Page<UserFullDto> getUsers(Integer from, Integer size) {
+        Pageable pageable = PageRequest.of(from, size, Sort.by("id"));
+        Page<User> userPage = userRepository.findAll(pageable);
+
+        List<UserFullDto> userFullDtos = userPage.getContent().stream()
+                .map(userMapper::toUserFullDto)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(userFullDtos, pageable, userPage.getTotalElements());
+    }
+
+    public UserFullDto getUserById(Long userId) {
+        return userMapper.toUserFullDto(userService.findById(userId));
     }
 }

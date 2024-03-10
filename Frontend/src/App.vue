@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <main-navbar :username="userName"></main-navbar>
+    <main-navbar :user="userData"></main-navbar>
     <router-view></router-view>
     <main-footer></main-footer>
   </div>
@@ -15,19 +15,19 @@ import MainFooter from "@/components/MainFooter.vue";
 export default {
   data() {
     return {
-      userName: ''
+      userData: ''
     }
   },
   components: {MainFooter, MainNavbar},
 
   mounted() {
   },
-  computed: mapState(['username']),
+  computed: mapState(['userData']),
   created() {
     this.unsubscribe = this.$store.subscribe((mutation, state) => {
-      if (mutation.type === 'updateUsername') {
-        console.log(`Updating to ${state.username}`);
-        this.userName = state.username;
+      if (mutation.type === 'updateUser') {
+        console.log(`Updating to ${state.userData}`);
+        this.userData = state.userData;
       }
     });
   },
@@ -41,5 +41,10 @@ export default {
 * {
   margin: 0;
   padding: 0;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
 }
 </style>
