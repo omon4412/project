@@ -1,6 +1,7 @@
 package com.omon4412.authservice.service;
 
 import com.omon4412.authservice.dto.NewUserRequest;
+import com.omon4412.authservice.dto.SessionDetailsDto;
 import com.omon4412.authservice.dto.UserFullDto;
 import com.omon4412.authservice.exception.NotFoundException;
 import com.omon4412.authservice.exception.UnauthorizedException;
@@ -51,13 +52,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<SessionDetails> getCurrentUserSessions(Principal principal) {
+    public List<SessionDetailsDto> getCurrentUserSessions(Principal principal) {
         findByUsername(principal.getName()).orElseThrow(() -> {
             String errorMessage = String.format("Пользователь {%s} не найден", principal.getName());
             log.error(errorMessage);
             return new NotFoundException(errorMessage);
         });
-        List<SessionDetails> sessionDetailsList = new ArrayList<>();
+        List<SessionDetailsDto> sessionDetailsDtoList = new ArrayList<>();
         List<SessionInformation> allSessions = sessionRegistry.getAllSessions(principal, false);
         List<String> sessionIds = allSessions.stream()
                 .map(SessionInformation::getSessionId)
@@ -66,19 +67,38 @@ public class UserServiceImpl implements UserService {
 
         String result1 = String.join(",", sessionIds);
 
-        String sqlAttributes = "SELECT session_primary_id, attribute_bytes " +
-                "FROM spring_session_attributes " +
-                "WHERE session_primary_id IN (SELECT primary_id from spring_session where session_id IN (" + result1 + "))" +
-                " AND attribute_name = 'SESSION_DETAILS'";
+        String sqlAttributes = "SELECT ssa.attribute_bytes, ss.session_id\n" +
+                "FROM spring_session_attributes ssa\n" +
+                "JOIN spring_session ss ON ssa.session_primary_id = ss.primary_id\n" +
+                "WHERE ss.session_id IN (SELECT session_id FROM spring_session WHERE session_id IN (" + result1 + ") " +
+                "AND last_access_time <> expiry_time\n" +
+                "AND EXTRACT(EPOCH FROM NOW()) < expiry_time/1000) " +
+                "AND ssa.attribute_name = 'SESSION_DETAILS';";
         List<Map<String, Object>> result = jdbcTemplate.queryForList(sqlAttributes);
 
         for (Map<String, Object> row : result) {
             byte[] attributeBytes = (byte[]) row.get("attribute_bytes");
+            String sessionId = (String) row.get("session_id");
             SessionDetails sessionDetails = deserialize(attributeBytes);
-            sessionDetailsList.add(sessionDetails);
+            SessionDetailsDto sessionDetailsDto = new SessionDetailsDto(sessionId, sessionDetails);
+            sessionDetailsDtoList.add(sessionDetailsDto);
         }
 
-        return sessionDetailsList;
+        return sessionDetailsDtoList;
+    }
+
+    @Override
+    public void terminateSessionById(Principal principal, String sessionId) {
+        findByUsername(principal.getName()).orElseThrow(() -> {
+            String errorMessage = String.format("Пользователь {%s} не найден", principal.getName());
+            log.error(errorMessage);
+            return new NotFoundException(errorMessage);
+        });
+
+        SessionInformation sessionInformation = sessionRegistry.getSessionInformation(sessionId);
+        if (sessionInformation != null) {
+            sessionInformation.expireNow();
+        }
     }
 
     @Override

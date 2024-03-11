@@ -1,11 +1,12 @@
 <template>
   <notification-window ref="notificationRef"></notification-window>
   <div>
-    <custom-dialog v-model:show="userDialogVisible"  v-model:route="routeUser">
+    <custom-dialog v-model:show="userDialogVisible" v-model:route="routeUser">
       <profile-component style="height: 100% !important;"
-          :email="currentUser.email" :fullName="currentUser.realName" :login="currentUser.username" :phone="currentUser.phoneNumber" :roles="currentUser.roles">
+                         :email="currentUser.email" :fullName="currentUser.realName" :login="currentUser.username"
+                         :phone="currentUser.phoneNumber" :roles="currentUser.roles">
         <template v-slot:slot1>
-        <h2>Карточка пользователя - {{currentUser.id}}</h2>
+          <h2>Карточка пользователя - {{ currentUser.id }}</h2>
         </template>
       </profile-component>
     </custom-dialog>
@@ -30,7 +31,7 @@
         <td>{{ user.email }}</td>
         <td>{{ user.phoneNumber }}</td>
         <td>{{ user.roles }}</td>
-<!--        <router-link :to="{ path: '/admin/users/' + user.id }">Профиль</router-link>-->
+        <!--        <router-link :to="{ path: '/admin/users/' + user.id }">Профиль</router-link>-->
       </tr>
       </tbody>
     </table>
@@ -77,7 +78,7 @@ export default {
         this.$refs.notificationRef.showNotification(e.message, 3000, "error");
       }
     },
-    aboutUser(user){
+    aboutUser(user) {
       console.log(user)
       this.currentUser = user;
       this.userDialogVisible = true;

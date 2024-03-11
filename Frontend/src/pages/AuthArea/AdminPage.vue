@@ -42,7 +42,7 @@ export default {
       showSideBar: true,
       items: [
         {name: "Users", url: "/users"},],
-        //{name: "Shortcuts", url: "/test2"}
+      //{name: "Shortcuts", url: "/test2"}
       selectedItem: null
     }
   },

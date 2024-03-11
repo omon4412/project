@@ -1,6 +1,5 @@
 package com.omon4412.authservice.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

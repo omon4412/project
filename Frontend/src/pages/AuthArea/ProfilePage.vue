@@ -27,15 +27,15 @@
               </div>
             </div>
             <hr>
-            <div class="row" v-for="session in sessions" :key="session.id">
+            <div class="row" v-for="session in sessions" :key="session.sessionId">
               <div class="col-sm-3 text-secondary">
-                <h6 class="mb-0">{{session.remoteAddress}}</h6>
+                <h6 class="mb-0">{{ session.sessionDetails.remoteAddress }}</h6>
               </div>
               <div class="col-sm-7 text-secondary">
-                {{session.userAgent}}
+                {{ session.sessionDetails.userAgent }}
               </div>
               <div class="col-sm-2">
-                <button class="btn btn-danger">Выйти</button>
+                <button @click="terminateSession(session.sessionId)" class="btn btn-danger">Выйти</button>
               </div>
               <hr>
             </div>
@@ -91,6 +91,16 @@ export default {
         this.$refs.notificationRef.showNotification(e.message, 3000, "error");
       }
     },
+    async terminateSession(sessionId) {
+      try {
+        await axios.delete('http://localhost:5100/api/v1/user/sessions/' + sessionId, {
+          withCredentials: true
+        });
+        this.sessions = this.sessions.filter(s => s.sessionId !== sessionId);
+      } catch (e) {
+        this.$refs.notificationRef.showNotification(e.message, 3000, "error");
+      }
+    }
   },
   async mounted() {
     const session = await checkSession();

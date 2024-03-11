@@ -2,9 +2,9 @@ package com.omon4412.authservice.service;
 
 
 import com.omon4412.authservice.dto.NewUserRequest;
+import com.omon4412.authservice.dto.SessionDetailsDto;
 import com.omon4412.authservice.dto.UserFullDto;
 import com.omon4412.authservice.exception.NotFoundException;
-import com.omon4412.authservice.model.SessionDetails;
 import com.omon4412.authservice.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -39,5 +39,7 @@ public interface UserService extends UserDetailsService {
 
     UserFullDto getCurrentUserInfo(Principal principal);
 
-    List<SessionDetails> getCurrentUserSessions(Principal principal);
+    List<SessionDetailsDto> getCurrentUserSessions(Principal principal);
+
+    void terminateSessionById(Principal principal, String sessionId);
 }
