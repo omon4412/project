@@ -1,6 +1,7 @@
 package com.omon4412.authservice.controller;
 
 import com.omon4412.authservice.dto.UserFullDto;
+import com.omon4412.authservice.dto.UserFullDtoWithStatus;
 import com.omon4412.authservice.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,12 +17,12 @@ public class UserControllerAdmin {
 
     @GetMapping
     public Page<UserFullDto> getUsers(@RequestParam(required = false, defaultValue = "0") Integer from,
-                                      @RequestParam(required = false, defaultValue = "10") Integer size) {
+                                                @RequestParam(required = false, defaultValue = "10") Integer size) {
         return authService.getUsers(from, size);
     }
 
     @GetMapping("/{userId}")
-    public UserFullDto getUserById(@PathVariable Long userId) {
+    public UserFullDtoWithStatus getUserById(@PathVariable Long userId) {
         return authService.getUserById(userId);
     }
 

@@ -8,6 +8,29 @@
         <template v-slot:slot1>
           <h2>Карточка пользователя - {{ currentUser.id }}</h2>
         </template>
+        <template v-slot:slot2>
+          <div class="mt-3">
+            <custom-card>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-7">
+                    <h6 class="mb-0">Действия</h6>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div v-if="!currentUser.isLocked" class="col-sm-7">
+                    <button class="btn btn-danger" @click="changeBlockUser">Заблокировать</button>
+                  </div>
+                  <div v-else class="col-sm-7">
+                    <button class="btn btn-danger" @click="changeBlockUser">Разблокировать</button>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </custom-card>
+          </div>
+        </template>
       </profile-component>
     </custom-dialog>
     <h1>Users</h1>
@@ -51,7 +74,7 @@ export default {
       selectedSort: '',
       searchQuery: '',
       page: 0,
-      size: 10,
+      size: 12,
       totalPages: 0,
       userDialogVisible: false,
       currentUser: null,
@@ -70,7 +93,6 @@ export default {
           },
           withCredentials: true
         });
-        //console.log(response.data)
         this.totalPages = response.data.totalPages;
         this.users = response.data.content;
         console.log(this.users)
@@ -78,10 +100,28 @@ export default {
         this.$refs.notificationRef.showNotification(e.message, 3000, "error");
       }
     },
-    aboutUser(user) {
-      console.log(user)
-      this.currentUser = user;
-      this.userDialogVisible = true;
+    async aboutUser(user) {
+      try {
+        const response = await axios.get('http://localhost:5100/api/v1/admin/users/' + user.id, {
+          withCredentials: true
+        });
+        this.currentUser = response.data;
+        this.userDialogVisible = true;
+      } catch (e) {
+        this.$refs.notificationRef.showNotification(e.message, 3000, "error");
+      }
+    },
+    async changeBlockUser() {
+      try {
+        let isLock = this.currentUser.isLocked ? "unlock" : "lock";
+        await axios.post('http://localhost:5100/api/v1/admin/users/' + this.currentUser.id + "/" + isLock, {},{
+          withCredentials: true
+        });
+        this.currentUser.isLocked = !this.currentUser.isLocked;
+      } catch (e) {
+        console.log(e);
+        this.$refs.notificationRef.showNotification(e.response.data.message, 3000, "error");
+      }
     }
   },
   async mounted() {
