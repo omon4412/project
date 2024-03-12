@@ -1,10 +1,7 @@
 package com.omon4412.authservice.service;
 
 import com.omon4412.authservice.config.KafkaProducer;
-import com.omon4412.authservice.dto.LoginRequest;
-import com.omon4412.authservice.dto.NewUserRequest;
-import com.omon4412.authservice.dto.UserDto;
-import com.omon4412.authservice.dto.UserFullDto;
+import com.omon4412.authservice.dto.*;
 import com.omon4412.authservice.exception.BadRequestException;
 import com.omon4412.authservice.exception.NotFoundException;
 import com.omon4412.authservice.exception.UnauthorizedException;
@@ -170,7 +167,7 @@ public class AuthService {
         return new PageImpl<>(userFullDtos, pageable, userPage.getTotalElements());
     }
 
-    public UserFullDto getUserById(Long userId) {
-        return userMapper.toUserFullDto(userService.findById(userId));
+    public UserFullDtoWithStatus getUserById(Long userId) {
+        return userMapper.toUserFullDtoWithStatus(userService.findById(userId));
     }
 }

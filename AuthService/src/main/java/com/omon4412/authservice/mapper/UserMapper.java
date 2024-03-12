@@ -4,6 +4,7 @@ package com.omon4412.authservice.mapper;
 import com.omon4412.authservice.dto.RoleDto;
 import com.omon4412.authservice.dto.UserDto;
 import com.omon4412.authservice.dto.UserFullDto;
+import com.omon4412.authservice.dto.UserFullDtoWithStatus;
 import com.omon4412.authservice.model.Role;
 import com.omon4412.authservice.model.User;
 import org.mapstruct.Mapper;
@@ -28,6 +29,12 @@ public interface UserMapper {
             @Mapping(target = "realName", source = "realName")
     })
     UserFullDto toUserFullDto(User user);
+
+
+    @Mappings({
+            @Mapping(target = "isLocked", source = "locked")
+    })
+    UserFullDtoWithStatus toUserFullDtoWithStatus(User user);
 
     @Mapping(source = "name", target = "name")
     RoleDto roleToRoleDto(Role role);

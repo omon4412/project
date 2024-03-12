@@ -21,6 +21,7 @@ spring:
             allowedMethods:
               - GET
               - POST
+              - DELETE
               - OPTIONS
       routes:
         - id: login-route

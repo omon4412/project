@@ -1,10 +1,10 @@
 package com.omon4412.authservice.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 
@@ -12,9 +12,9 @@ import java.util.Collection;
  * DTO для представления полной информации о пользователе.
  */
 @Data
-@Builder
-@AllArgsConstructor
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserFullDto implements UserInfo {
     /**
      * Идентификатор пользователя.

@@ -1,14 +1,9 @@
 <template>
   <div class="container">
     <div class="main-body">
-      <nav aria-label="breadcrumb" class="main-breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <router-link to="/">Home</router-link>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-        </ol>
-      </nav>
+      <div class="slot1">
+        <slot name="slot1"></slot>
+      </div>
       <div class="row gutters-sm">
         <div class="col-md-4 mb-3">
           <custom-card>
@@ -105,7 +100,11 @@
               <!--              </div>-->
             </div>
           </custom-card>
+          <div class="slot2">
+            <slot name="slot2"></slot>
+          </div>
         </div>
+
       </div>
 
     </div>

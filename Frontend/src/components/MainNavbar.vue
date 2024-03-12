@@ -43,7 +43,6 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                data-bs-toggle="dropdown"
                aria-expanded="false">
-
               {{ newuser.username }}
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -58,7 +57,7 @@
                 <hr class="dropdown-divider">
               </li>
               <li>
-                <router-link class="dropdown-item" to="/logout">Logout</router-link>
+                <router-link class="dropdown-item" to="/logout">Выйти</router-link>
               </li>
             </ul>
           </li>
@@ -66,11 +65,6 @@
         <ul v-else class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item">
             <router-link class="nav-link active" aria-current="page" to="/login">Войти</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link active" aria-current="page" to="/register"
-            >Регистрация(NI)
-            </router-link>
           </li>
         </ul>
       </div>
