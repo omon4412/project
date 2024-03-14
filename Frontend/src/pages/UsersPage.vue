@@ -34,16 +34,32 @@
       </profile-component>
     </custom-dialog>
     <h1>Users</h1>
+    <input v-model="searchQuery" class="form-control mb-1" type="search" placeholder="Поиск пользователей"
+           aria-label="Search">
     <table class="table">
       <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">ФИО</th>
-        <th scope="col">Логин</th>
-        <th scope="col">Email</th>
-        <th scope="col">Телефон</th>
+        <th scope="col" @click="changeSort('id')">
+          # <span v-if="selectedSort === 'id' && sortType === 'asc'">&#9650;</span><span
+            v-if="selectedSort === 'id' && sortType === 'desc'">&#9660;</span>
+        </th>
+        <th scope="col" @click="changeSort('realName')">
+          ФИО <span v-if="selectedSort === 'realName' && sortType === 'asc'">&#9650;</span><span
+            v-if="selectedSort === 'realName' && sortType === 'desc'">&#9660;</span>
+        </th>
+        <th scope="col" @click="changeSort('username')">
+          Логин <span v-if="selectedSort === 'username' && sortType === 'asc'">&#9650;</span><span
+            v-if="selectedSort === 'username' && sortType === 'desc'">&#9660;</span>
+        </th>
+        <th scope="col" @click="changeSort('email')">
+          Email <span v-if="selectedSort === 'email' && sortType === 'asc'">&#9650;</span><span
+            v-if="selectedSort === 'email' && sortType === 'desc'">&#9660;</span>
+        </th>
+        <th scope="col" @click="changeSort('phoneNumber')">
+          Телефон <span v-if="selectedSort === 'phoneNumber' && sortType === 'asc'">&#9650;</span><span
+            v-if="selectedSort === 'phoneNumber' && sortType === 'desc'">&#9660;</span>
+        </th>
         <th scope="col">Роли</th>
-        <th scope="col"></th>
       </tr>
       </thead>
       <tbody>
@@ -71,7 +87,8 @@ export default {
   data() {
     return {
       users: [],
-      selectedSort: '',
+      selectedSort: 'id',
+      sortType: 'asc',
       searchQuery: '',
       page: 0,
       size: 12,
@@ -88,14 +105,14 @@ export default {
           params: {
             size: this.size,
             from: this.page,
-            //sort: this.selectedSort,
-            //title_like: this.searchQuery
+            sortColumn: this.selectedSort,
+            sortType: this.sortType,
+            queryString: this.searchQuery
           },
           withCredentials: true
         });
         this.totalPages = response.data.totalPages;
         this.users = response.data.content;
-        console.log(this.users)
       } catch (e) {
         this.$refs.notificationRef.showNotification(e.message, 3000, "error");
       }
@@ -114,7 +131,7 @@ export default {
     async changeBlockUser() {
       try {
         let isLock = this.currentUser.isLocked ? "unlock" : "lock";
-        await axios.post('http://localhost:5100/api/v1/admin/users/' + this.currentUser.id + "/" + isLock, {},{
+        await axios.post('http://localhost:5100/api/v1/admin/users/' + this.currentUser.id + "/" + isLock, {}, {
           withCredentials: true
         });
         this.currentUser.isLocked = !this.currentUser.isLocked;
@@ -122,6 +139,15 @@ export default {
         console.log(e);
         this.$refs.notificationRef.showNotification(e.response.data.message, 3000, "error");
       }
+    },
+    changeSort(sortColumn) {
+      console.log(sortColumn)
+      if (sortColumn === this.selectedSort) {
+        this.sortType = this.sortType === 'asc' ? 'desc' : 'asc';
+        return;
+      }
+      this.selectedSort = sortColumn;
+      this.sortType = 'asc'
     }
   },
   async mounted() {
@@ -132,6 +158,15 @@ export default {
     page() {
       this.fetchUsers();
     },
+    searchQuery() {
+      this.fetchUsers();
+    },
+    sortType() {
+      this.fetchUsers();
+    },
+    selectedSort() {
+      this.fetchUsers();
+    }
   }
 
 }

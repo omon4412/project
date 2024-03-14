@@ -17,8 +17,11 @@ public class UserControllerAdmin {
 
     @GetMapping
     public Page<UserFullDto> getUsers(@RequestParam(required = false, defaultValue = "0") Integer from,
-                                                @RequestParam(required = false, defaultValue = "10") Integer size) {
-        return authService.getUsers(from, size);
+                                      @RequestParam(required = false, defaultValue = "10") Integer size,
+                                      @RequestParam(required = false) String queryString,
+                                      @RequestParam(required = false, defaultValue = "id") String sortColumn,
+                                      @RequestParam(required = false, defaultValue = "asc") String sortType) {
+        return authService.getUsers(from, size, queryString, sortColumn, sortType);
     }
 
     @GetMapping("/{userId}")
