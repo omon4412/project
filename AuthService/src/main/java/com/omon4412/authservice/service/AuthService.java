@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.*;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -156,15 +157,34 @@ public class AuthService {
         return errorMessage;
     }
 
-    public Page<UserFullDto> getUsers(Integer from, Integer size) {
-        Pageable pageable = PageRequest.of(from, size, Sort.by("id"));
-        Page<User> userPage = userRepository.findAll(pageable);
+    public Page<UserFullDto> getUsers(Integer from, Integer size, String queryString, String sortColumn, String sortType) {
+        Sort sort;
+        if ("asc".equalsIgnoreCase(sortType)) {
+            sort = Sort.by(Sort.Direction.ASC, sortColumn);
+        } else if ("desc".equalsIgnoreCase(sortType)) {
+            sort = Sort.by(Sort.Direction.DESC, sortColumn);
+        } else {
+            throw new BadRequestException("Неверный тип сортировки: " + sortType);
+        }
+        try{
+        Pageable pageable = PageRequest.of(from, size, sort);
+        if (queryString != null && !queryString.isEmpty()) {
+            Page<User> userPage = userRepository.findAllByIdInAndUsernameOrEmailContaining(queryString, pageable);
 
-        List<UserFullDto> userFullDtos = userPage.getContent().stream()
-                .map(userMapper::toUserFullDto)
-                .collect(Collectors.toList());
+            List<UserFullDto> userFullDtos = userPage.getContent().stream()
+                    .map(userMapper::toUserFullDto)
+                    .collect(Collectors.toList());
+            return new PageImpl<>(userFullDtos, pageable, userPage.getTotalElements());
+        } else {
+            Page<User> userPage = userRepository.findAll(pageable);
 
-        return new PageImpl<>(userFullDtos, pageable, userPage.getTotalElements());
+            List<UserFullDto> userFullDtos = userPage.getContent().stream()
+                    .map(userMapper::toUserFullDto)
+                    .collect(Collectors.toList());
+            return new PageImpl<>(userFullDtos, pageable, userPage.getTotalElements());
+        }}catch (PropertyReferenceException ex){
+            throw new BadRequestException("Неверный тип колонки: " + ex.getPropertyName());
+        }
     }
 
     public UserFullDtoWithStatus getUserById(Long userId) {
